@@ -1,0 +1,6 @@
+python-cartesi
+requests
+gql[requests]
+pandas
+typer
+rich
