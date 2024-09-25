@@ -34,3 +34,5 @@ The winners will be drawn with the following procedure:
 - The pRNG will be used to draw 100 players, without replacement, and with probabilities proportional to the number of tickets.
 
 The script draw_winners.py will read the previously generated JSON file and output another JSON file with the winners.
+
+The seed for the draw will be the block hash of the first Ethereum Mainnet block after 2024-09-26T00:00:00Z, which is a date posterior to any commits that changes the code of this repository.
