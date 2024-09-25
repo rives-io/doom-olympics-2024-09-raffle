@@ -2,10 +2,11 @@
 import hashlib
 import json
 from pathlib import Path
-import random
 from typing_extensions import Annotated
+import zlib
 
 import pandas as pd
+import numpy as np
 import typer
 
 
@@ -47,12 +48,18 @@ def main(
     with filename.open('rb') as fin:
         file_hash = hashlib.sha256(fin.read()).hexdigest()
 
-    population = df['user_address'].to_list()
-    weights = df['count'].to_list()
+    population = df['user_address'].values
+    weights = df['count'].values
+    prob = weights / weights.sum()
 
-    prng = random.Random(seed)
+    seed_crc = zlib.crc32(seed.encode())
+    print(seed_crc)
 
-    winners = prng.choices(population=population, weights=weights, k=n_winners)
+    prng = np.random.RandomState(seed_crc)
+    prng
+
+    winners = prng.choice(population, p=prob, size=n_winners, replace=False)
+    winners = winners.tolist()
 
     output_data = {
         'input_file_sha256': file_hash,
