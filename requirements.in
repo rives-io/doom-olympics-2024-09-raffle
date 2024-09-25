@@ -4,3 +4,4 @@ gql[requests]
 pandas
 typer
 rich
+tabulate
